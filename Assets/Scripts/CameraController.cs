@@ -4,18 +4,30 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // change size to zoom in/out
-    // clamp values to min and max
-    // mouse wheel scrolling
+    private Vector3 mouseOriginPoint;
+    private Vector3 offset;
+    private bool isDragging;
+
     private void LateUpdate()
     {
-        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * Camera.main.orthographicSize, 2.5f, 20f);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * Camera.main.orthographicSize, 2f, 20f);
         
-    }
+        if (Input.GetMouseButton(2))
+        {
+            offset = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
 
+            if (!isDragging)
+            {
+                isDragging = true;
+                mouseOriginPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+        }
+        else
+        {
+            isDragging = false;
+        }
+
+        if (isDragging)
+            transform.position = mouseOriginPoint - offset;
+    }
 }
