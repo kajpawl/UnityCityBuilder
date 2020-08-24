@@ -18,6 +18,6 @@ public class Board : MonoBehaviour
 
     public Vector3 CalculateGridPosition(Vector3 position)
     {
-        return new Vector3(Mathf.Round(position.x), .25f, Mathf.Round(position.z));
+        return new Vector3(Mathf.Round(position.x), .5f, Mathf.Round(position.z));
     }
 }
