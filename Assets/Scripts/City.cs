@@ -13,28 +13,36 @@ public class City : MonoBehaviour
     public float Food { get; set; }
 
     public int[] buildingCounts = new int[3];
+    private UIController uiController;
 
     // Start is called before the first frame update
     void Start()
     {
+        uiController = GetComponent<UIController>();
+
         buildingCounts[0] = 4;
         buildingCounts[1] = 3;
         buildingCounts[2] = 2;
 
+        Day = 1;
         Cash = 10000;
         Food = 6;
         JobsCeiling = 10;
+
+        uiController.UpdateCityData();
+        uiController.UpdateDayCount();
     }
 
     public void EndTurn()
     {
         Day++;
+        CalculateCash();
         CalculatePopulation();
         CalculateJobs();
         CalculateFood();
-        CalculateCash();
-        Debug.Log("Day ended");
-        Debug.LogFormat("Jobs: {0}/{1}, Cash: {2}, pop: {3}/{4}, Food: {5}", JobsCurrent, JobsCeiling, Cash, PopulationCurrent, PopulationCeiling, Food);
+
+        uiController.UpdateCityData();
+        uiController.UpdateDayCount();
     }
 
     void CalculateJobs()
