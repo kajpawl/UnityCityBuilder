@@ -11,9 +11,15 @@ public class Board : MonoBehaviour
         buildings[(int)position.x, (int)position.z] = Instantiate(building, position, Quaternion.identity);
     }
 
-    public bool CheckForBuildingAtPosition(Vector3 position)
+    public Building CheckForBuildingAtPosition(Vector3 position)
     {
-        return buildings[(int)position.x, (int)position.z] != null;
+        return buildings[(int)position.x, (int)position.z];
+    }
+
+    public void RemoveBuilding(Vector3 position)
+    {
+        Destroy(buildings[(int)position.x, (int)position.z].gameObject);
+        buildings[(int)position.x, (int)position.z] = null;
     }
 
     public Vector3 CalculateGridPosition(Vector3 position)

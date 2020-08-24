@@ -15,14 +15,11 @@ public class City : MonoBehaviour
     public int[] buildingCounts = new int[4];
     private UIController uiController;
 
-    // Start is called before the first frame update
     void Start()
     {
         uiController = GetComponent<UIController>();
         Day = 1;
-        Cash = 10000;
-        Food = 6;
-        JobsCeiling = 10;
+        Cash = 50;
 
         uiController.UpdateCityData();
         uiController.UpdateDayCount();
@@ -49,6 +46,11 @@ public class City : MonoBehaviour
     void CalculateCash()
     {
         Cash += JobsCurrent * 2;
+    }
+
+    public void DepositCash(int cash)
+    {
+        Cash += cash;
     }
 
     void CalculateFood()

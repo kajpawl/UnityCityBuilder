@@ -18,15 +18,20 @@ public class BuildingHandler : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftShift) && selectedBuilding != null)
         {
-            InteractWithBoard();
+            InteractWithBoard(0);
         }
         else if (Input.GetMouseButtonDown(0) && selectedBuilding != null)
         {
-            InteractWithBoard();
+            InteractWithBoard(0);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            InteractWithBoard(1);
         }
     }
 
-    void InteractWithBoard()
+    void InteractWithBoard(int action)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -34,17 +39,26 @@ public class BuildingHandler : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             Vector3 gridPosition = board.CalculateGridPosition(hit.point);
-
-            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && !board.CheckForBuildingAtPosition(gridPosition))
+            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
-                if (city.Cash >= selectedBuilding.cost)
+                if (action == 0 && board.CheckForBuildingAtPosition(gridPosition) == null)
                 {
-                    city.Cash -= selectedBuilding.cost;
+                    if (city.Cash >= selectedBuilding.cost)
+                    {
+                        city.DepositCash(-selectedBuilding.cost);
+                        uiController.UpdateCityData();
+                        city.buildingCounts[selectedBuilding.id]++;
+                        board.AddBuilding(selectedBuilding, gridPosition);
+                    }
+                }
+                else if (action == 1 && board.CheckForBuildingAtPosition(gridPosition) != null)
+                {
+                    city.DepositCash(board.CheckForBuildingAtPosition(gridPosition).cost / 2);
+                    board.RemoveBuilding(gridPosition);
                     uiController.UpdateCityData();
-                    city.buildingCounts[selectedBuilding.id]++;
-                    board.AddBuilding(selectedBuilding, gridPosition);
                 }
             }
+            
         }
     }
 
