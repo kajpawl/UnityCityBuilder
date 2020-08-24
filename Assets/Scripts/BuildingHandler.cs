@@ -14,16 +14,13 @@ public class BuildingHandler : MonoBehaviour
     private Board board;
     private Building selectedBuilding;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && selectedBuilding != null)
+        if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftShift) && selectedBuilding != null)
+        {
+            InteractWithBoard();
+        }
+        else if (Input.GetMouseButtonDown(0) && selectedBuilding != null)
         {
             InteractWithBoard();
         }
