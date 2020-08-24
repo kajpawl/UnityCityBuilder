@@ -38,7 +38,7 @@ public class BuildingHandler : MonoBehaviour
         {
             Vector3 gridPosition = board.CalculateGridPosition(hit.point);
 
-            if (!board.CheckForBuildingAtPosition(gridPosition))
+            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && !board.CheckForBuildingAtPosition(gridPosition))
             {
                 if (city.Cash >= selectedBuilding.cost)
                 {
