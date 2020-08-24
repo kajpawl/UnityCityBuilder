@@ -20,9 +20,6 @@ public class City : MonoBehaviour
         uiController = GetComponent<UIController>();
         Day = 1;
         Cash = 50;
-
-        uiController.UpdateCityData();
-        uiController.UpdateDayCount();
     }
 
     public void EndTurn()
