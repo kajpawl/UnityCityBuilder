@@ -37,7 +37,7 @@ public class City : MonoBehaviour
     void CalculateJobs()
     {
         JobsCeiling = buildingCounts[3] * 10;
-        JobsCurrent = Mathf.Min((int)PopulationCurrent);
+        JobsCurrent = Mathf.Min((int)PopulationCurrent, JobsCeiling);
     }
 
     void CalculateCash()
